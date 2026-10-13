@@ -1,0 +1,160 @@
+/*
+ * Landing page styling. Everything is scoped under .lp so dashboard / admin / exam / auth are untouched.
+ * Built on the app's own tokens (globals.css): paper canvas, ink navy, teal lead colour, and the
+ * plum / sky / chartreuse / persimmon set, which here belongs to the four skills.
+ *
+ * Note: globals.css sets `* { border-color }` unlayered, which beats Tailwind's border-colour utilities.
+ * Border colours on this page are therefore declared in this file, not with utilities.
+ */
+.lp {
+  --lp-line: var(--border);
+  --lp-hair: rgb(22 33 58 / 0.14);
+  --lp-brand-deep: #0a5f57; /* brand text on brand-soft, 7:1 */
+  background: var(--background);
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 1.6;
+}
+.lp :is(h1, h2, h3) { text-wrap: balance; }
+.lp :focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; border-radius: 6px; }
+.lp-on-dark :focus-visible { outline-color: var(--chartreuse); }
+.lp-wrap { width: 100%; max-width: 76rem; margin-inline: auto; padding-inline: 1.25rem; }
+
+.lp-h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2rem, 4.6vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+/* ---------- buttons ---------- */
+.lp-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  min-height: 3.25rem; padding: 0 1.75rem; border-radius: 999px;
+  border: 1px solid transparent;
+  font-weight: 700; font-size: 1.02rem; line-height: 1; white-space: nowrap;
+  transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+.lp-btn:hover { transform: translateY(-2px); }
+.lp-btn:active { transform: translateY(0); }
+.lp-btn-ink { background: var(--ink); color: #fff; box-shadow: 0 10px 22px -10px rgb(22 33 58 / .6); }
+.lp-btn-ink:hover { box-shadow: 0 14px 26px -10px rgb(22 33 58 / .7); }
+.lp-btn-brand { background: var(--brand); color: #fff; box-shadow: 0 12px 24px -10px rgb(14 132 121 / .65); }
+.lp-btn-brand:hover { box-shadow: 0 16px 28px -10px rgb(14 132 121 / .75); }
+.lp-btn-ghost { background: #fff; color: var(--ink); border-color: var(--lp-hair); }
+.lp-btn-ghost:hover { background: var(--ink-soft); }
+.lp-btn-sm { min-height: 2.5rem; padding: 0 1.1rem; font-size: .95rem; }
+
+/* Never set `display` on a class that also takes a Tailwind show/hide utility: unlayered CSS beats Tailwind's layers. */
+/* ---------- floating pill header ---------- */
+.lp-header-wrap { position: sticky; top: 0; z-index: 50; padding: .75rem 1rem 0; pointer-events: none; }
+.lp-header, .lp-menu { pointer-events: auto; max-width: 64rem; margin-inline: auto; background: rgb(255 255 255 / .86); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid var(--lp-line); box-shadow: var(--shadow-lift); }
+.lp-header { display: flex; align-items: center; justify-content: space-between; gap: .75rem; height: 3.5rem; padding: 0 .5rem 0 1rem; border-radius: 999px; }
+.lp-menu { margin-top: .5rem; border-radius: 1.5rem; padding: .5rem; }
+.lp-navlink { padding: .4rem .85rem; border-radius: 999px; font-weight: 600; font-size: .95rem; color: var(--muted); transition: background-color .15s, color .15s; }
+.lp-navlink:hover { background: var(--brand-soft); color: var(--lp-brand-deep); }
+.lp-menu .lp-navlink { display: block; padding: .8rem 1rem; font-size: 1.05rem; color: var(--ink); border-radius: 1rem; }
+.lp-iconbtn { width: 2.5rem; height: 2.5rem; border-radius: 999px; border: 1px solid var(--lp-line); background: #fff; }
+
+/* ---------- hero ---------- */
+.lp-badge {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .4rem .95rem .4rem .75rem; border-radius: 999px;
+  background: #fff; border: 1px solid var(--lp-line);
+  font-size: .9rem; font-weight: 600; line-height: 1.2;
+  box-shadow: 0 1px 2px rgb(22 33 58 / .05);
+}
+.lp-hero-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.6rem, 6.2vw, 4.6rem);
+  line-height: .98;
+  letter-spacing: -0.045em;
+}
+.lp-avatar { display: flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; margin-left: -.5rem; border-radius: 999px; border: 2px solid var(--background); font-size: .72rem; font-weight: 800; color: var(--ink); }
+.lp-avatar:first-child { margin-left: 0; }
+
+/* Skill tiles: a row on small screens, floating in the corners from lg up. */
+.lp-tiles { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.25rem; }
+.lp-tilebox { display: flex; flex-direction: column; align-items: center; gap: .65rem; animation: lp-pop .7s cubic-bezier(.2,.9,.3,1.15) var(--d, 0s) both, lp-bob var(--bob, 6s) ease-in-out calc(var(--d, 0s) + .7s) infinite; }
+.lp-tilelabel { padding: .2rem .65rem; border-radius: 999px; background: #fff; border: 1px solid var(--lp-line); font-size: .74rem; font-weight: 700; line-height: 1.3; box-shadow: 0 1px 2px rgb(22 33 58 / .05); }
+.lp-tilebox .lp-tile { width: 3.9rem; height: 3.9rem; transform: rotate(var(--tilt, 0deg)); }
+@media (min-width: 1024px) {
+  .lp-tiles { position: absolute; inset: 0; display: block; margin: 0; pointer-events: none; }
+  .lp-tilebox { position: absolute; }
+  .lp-tilebox .lp-tile { width: 5.2rem; height: 5.2rem; }
+  .lp-tilebox[data-pos="tl"] { left: 0; top: 1.5rem; }
+  .lp-tilebox[data-pos="tr"] { right: 1rem; top: .5rem; }
+  .lp-tilebox[data-pos="bl"] { left: 3.5rem; bottom: 2.5rem; }
+  .lp-tilebox[data-pos="br"] { right: 4rem; bottom: 1.5rem; }
+}
+@media (min-width: 1280px) {
+  .lp-tilebox .lp-tile { width: 6.2rem; height: 6.2rem; }
+  .lp-tilebox[data-pos="tl"] { left: 1.5rem; top: 2rem; }
+  .lp-tilebox[data-pos="tr"] { right: 2.5rem; }
+  .lp-tilebox[data-pos="bl"] { left: 5rem; }
+  .lp-tilebox[data-pos="br"] { right: 6rem; }
+}
+@keyframes lp-pop { from { opacity: 0; transform: translateY(16px) scale(.7); } to { opacity: 1; transform: none; } }
+@keyframes lp-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+/* ---------- skill tile (shared by hero, tabs, final CTA) ---------- */
+.lp-tile {
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  border-radius: 28%;
+  background: linear-gradient(150deg, var(--from), var(--to));
+  color: var(--fg, #fff);
+  box-shadow: 0 18px 28px -12px var(--glow), inset 0 1px 0 rgb(255 255 255 / .42), inset 0 -3px 6px rgb(0 0 0 / .08);
+}
+
+/* ---------- surfaces ---------- */
+.lp-card { background: #fff; border: 1px solid var(--lp-line); border-radius: 1.5rem; box-shadow: var(--shadow-lift); }
+.lp-panel { border-radius: 2.5rem; padding: clamp(1.5rem, 5vw, 4rem); }
+.lp-panel-canvas { background: var(--canvas); }
+.lp-panel-ink { background: var(--ink); color: #fff; }
+.lp-panel-brand { background: var(--brand); color: #fff; }
+
+.lp-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--lp-line); border: 1px solid var(--lp-line); border-radius: 2rem; overflow: hidden; box-shadow: var(--shadow-lift); }
+.lp-stat { background: #fff; padding: 1.5rem 1.5rem 1.6rem; }
+@media (min-width: 1024px) { .lp-stats { grid-template-columns: repeat(4, 1fr); } .lp-stat { padding: 1.9rem 2rem; } }
+.lp-stat-num { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.6rem, 5vw, 3.75rem); line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+
+.lp-check { display: inline-flex; align-items: center; justify-content: center; width: 1.5rem; height: 1.5rem; flex-shrink: 0; border-radius: 999px; background: var(--brand-soft); color: var(--lp-brand-deep); }
+.lp-chip { display: inline-flex; align-items: center; padding: .45rem 1.05rem; border-radius: 999px; background: #fff; border: 1px solid var(--lp-line); font-weight: 600; font-size: .95rem; }
+.lp-fade-edges { -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+
+/* ---------- writing demo ---------- */
+.lp-ruled { background-color: #fff; background-image: repeating-linear-gradient(transparent 0 31px, var(--lp-line) 31px 32px); background-attachment: local; }
+.lp-meter { height: .6rem; border-radius: 999px; background: var(--brand-soft); overflow: hidden; }
+.lp-meter > div { height: 100%; border-radius: 999px; background: var(--brand); transition: width .3s ease; }
+
+/* ---------- skill tabs ---------- */
+.lp-tab { display: flex; align-items: center; gap: .9rem; padding: .6rem .8rem; border-radius: 1.25rem; border: 1px solid transparent; text-align: left; transition: background-color .15s, box-shadow .15s; }
+.lp-tab:hover { background: rgb(255 255 255 / .6); }
+.lp-tab[aria-selected="true"] { background: #fff; border-color: var(--lp-line); box-shadow: var(--shadow-lift); }
+.lp-swap { animation: lp-fade .28s ease both; }
+@keyframes lp-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ---------- steps ---------- */
+.lp-step-num { display: flex; align-items: center; justify-content: center; width: 3rem; height: 3rem; border-radius: 999px; background: var(--brand-soft); color: var(--lp-brand-deep); font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; }
+@media (min-width: 1024px) {
+  .lp-step { position: relative; }
+  .lp-step:not(:last-child)::before { content: ""; position: absolute; top: 1.5rem; left: 3.75rem; right: -.75rem; border-top: 2px dashed var(--lp-hair); }
+}
+
+/* ---------- testimonials / faq ---------- */
+.lp-scroll { scrollbar-width: thin; scrollbar-color: rgb(255 255 255 / .4) transparent; }
+.lp-gain { padding: .2rem .65rem; border-radius: 999px; background: var(--brand-soft); color: var(--lp-brand-deep); font-size: .82rem; font-weight: 800; white-space: nowrap; }
+.lp-faq-item { border-bottom: 1px solid var(--lp-hair); }
+.lp-faq-icon { display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; flex-shrink: 0; border-radius: 999px; background: var(--brand-soft); color: var(--lp-brand-deep); transition: background-color .15s, color .15s; }
+button[aria-expanded="true"] .lp-faq-icon { background: var(--brand); color: #fff; }
+
+.lp-footlink { color: var(--muted); font-size: .95rem; transition: color .15s; }
+.lp-footlink:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-tilebox, .lp-swap { animation: none; }
+  .lp-btn, .lp-navlink, .lp-tab, .lp-meter > div { transition: none; }
+  .lp-btn:hover { transform: none; }
+}

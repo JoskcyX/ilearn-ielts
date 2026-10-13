@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # Set these in Netlify > Site settings > Environment variables (NOT here):
+  #   BACKEND_URL = https://<your-service>.onrender.com   (needed at BUILD and runtime)
+  #   AUTH_SECRET = <same value as the Render service>
